@@ -83,7 +83,8 @@ public:
 
   // Process Memory
   size_t ReadMemory(lldb::addr_t addr, void *buf, size_t size,
-                    lldb_private::Status &error) override;
+                    lldb_private::Status &error,
+                    lldb_private::ExecutionContext *exe_ctx = nullptr) override;
 
   size_t DoReadMemory(lldb::addr_t addr, void *buf, size_t size,
                       lldb_private::Status &error) override;

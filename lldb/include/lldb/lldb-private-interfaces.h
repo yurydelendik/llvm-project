@@ -104,6 +104,8 @@ typedef lldb::REPLSP (*REPLCreateInstance)(Status &error,
                                            const char *repl_options);
 typedef int (*ComparisonFunction)(const void *, const void *);
 typedef void (*DebuggerInitializeCallback)(Debugger &debugger);
+typedef DWARFEvaluatorFactory *(*DWARFEvaluatorFactoryCreateInstance)(
+    Module *module);
 
 } // namespace lldb_private
 

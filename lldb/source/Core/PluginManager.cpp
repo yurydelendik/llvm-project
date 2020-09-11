@@ -1472,3 +1472,32 @@ bool PluginManager::CreateSettingForStructuredDataPlugin(
       ConstString("Settings for structured data plug-ins"), properties_sp,
       description, is_global_property);
 }
+
+#pragma mark DWARFEvaluator
+
+typedef PluginInstance<DWARFEvaluatorFactoryCreateInstance>
+    DWARFEvaluatorFactoryInstance;
+typedef PluginInstances<DWARFEvaluatorFactoryInstance>
+    DWARFEvaluatorFactoryInstances;
+
+static DWARFEvaluatorFactoryInstances &GetDWARFEvaluatorFactoryInstances() {
+  static DWARFEvaluatorFactoryInstances g_instances;
+  return g_instances;
+}
+
+bool PluginManager::RegisterPlugin(
+    ConstString name, const char *description,
+    DWARFEvaluatorFactoryCreateInstance create_callback) {
+  return GetDWARFEvaluatorFactoryInstances().RegisterPlugin(name, description,
+                                                            create_callback);
+}
+
+bool PluginManager::UnregisterPlugin(
+    DWARFEvaluatorFactoryCreateInstance create_callback) {
+  return GetDWARFEvaluatorFactoryInstances().UnregisterPlugin(create_callback);
+}
+
+DWARFEvaluatorFactoryCreateInstance
+PluginManager::GetDWARFEvaluatorFactoryCreateCallbackAtIndex(uint32_t idx) {
+  return GetDWARFEvaluatorFactoryInstances().GetCallbackAtIndex(idx);
+}

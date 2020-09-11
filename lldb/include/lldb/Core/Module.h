@@ -41,6 +41,7 @@
 
 namespace lldb_private {
 class CompilerDeclContext;
+class DWARFEvaluatorFactory;
 class Function;
 class Log;
 class ObjectFile;
@@ -862,6 +863,8 @@ public:
   /// Update the ArchSpec to a more specific variant.
   bool MergeArchitecture(const ArchSpec &arch_spec);
 
+  DWARFEvaluatorFactory *GetDWARFExpressionEvaluatorFactory();
+
   /// \class LookupInfo Module.h "lldb/Core/Module.h"
   /// A class that encapsulates name lookup information.
   ///
@@ -990,6 +993,8 @@ protected:
   mutable bool m_file_has_changed : 1,
       m_first_file_changed_log : 1; /// See if the module was modified after it
                                     /// was initially opened.
+
+  std::unique_ptr<DWARFEvaluatorFactory> m_dwarf_evaluator_factory;
 
   /// Resolve a file or load virtual address.
   ///

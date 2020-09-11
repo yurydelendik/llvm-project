@@ -120,6 +120,10 @@ public:
 
   void SetModule(const lldb::ModuleSP &module) { m_module_wp = module; }
 
+  lldb::ModuleSP GetModule() const { return m_module_wp.lock(); }
+
+  const DWARFUnit *GetDWARFCompileUnit() const { return m_dwarf_cu; }
+
   bool ContainsThreadLocalStorage() const;
 
   bool LinkThreadLocalStorage(
@@ -140,7 +144,7 @@ public:
                                 lldb::addr_t func_file_addr);
 
   /// Return the call-frame-info style register kind
-  int GetRegisterKind();
+  lldb::RegisterKind GetRegisterKind() const;
 
   /// Set the call-frame-info style register kind
   ///
@@ -222,6 +226,9 @@ public:
   llvm::Optional<DataExtractor>
   GetLocationExpression(lldb::addr_t load_function_start,
                         lldb::addr_t addr) const;
+
+  static lldb::addr_t ReadAddressFromDebugAddrSection(const DWARFUnit *dwarf_cu,
+                                                      uint32_t index);
 
 private:
   /// Pretty-prints the location expression to a stream

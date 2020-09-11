@@ -1,5 +1,7 @@
 add_lldb_library(lldbExpression
   DiagnosticManager.cpp
+  DWARFEvaluator.cpp
+  DWARFEvaluatorFactory.cpp
   DWARFExpression.cpp
   Expression.cpp
   ExpressionVariable.cpp

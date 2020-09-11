@@ -16,6 +16,7 @@
 #include "lldb/Core/ModuleSpec.h"
 #include "lldb/Core/SearchFilter.h"
 #include "lldb/Core/Section.h"
+#include "lldb/Expression/DWARFEvaluatorFactory.h"
 #include "lldb/Host/FileSystem.h"
 #include "lldb/Host/Host.h"
 #include "lldb/Host/HostInfo.h"
@@ -1667,4 +1668,10 @@ bool Module::GetIsDynamicLinkEditor() {
     return obj_file->GetIsDynamicLinkEditor();
 
   return false;
+}
+
+DWARFEvaluatorFactory *Module::GetDWARFExpressionEvaluatorFactory() {
+  if (!m_dwarf_evaluator_factory)
+    m_dwarf_evaluator_factory = DWARFEvaluatorFactory::FindPlugin(this);
+  return m_dwarf_evaluator_factory.get();
 }

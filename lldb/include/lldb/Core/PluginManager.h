@@ -447,6 +447,17 @@ public:
   static bool CreateSettingForStructuredDataPlugin(
       Debugger &debugger, const lldb::OptionValuePropertiesSP &properties_sp,
       ConstString description, bool is_global_property);
+
+  // DWARFEvaluatorFactory
+  static bool
+  RegisterPlugin(ConstString name, const char *description,
+                 DWARFEvaluatorFactoryCreateInstance create_callback);
+
+  static bool
+  UnregisterPlugin(DWARFEvaluatorFactoryCreateInstance create_callback);
+
+  static DWARFEvaluatorFactoryCreateInstance
+  GetDWARFEvaluatorFactoryCreateCallbackAtIndex(uint32_t idx);
 };
 
 } // namespace lldb_private
